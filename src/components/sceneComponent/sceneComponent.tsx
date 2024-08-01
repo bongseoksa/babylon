@@ -8,6 +8,7 @@ type SceneComponentType = {
   sceneOptions?: SceneOptions;
   onRender: (scene: Scene, engine: Engine) => void;
   onSceneReady: (scene: Scene, engine: Engine) => void;
+  [key: string]: any; //rest 옵션
 };
 
 const SceneComponent = ({

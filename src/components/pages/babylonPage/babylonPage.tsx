@@ -45,7 +45,12 @@ function BabylonPage() {
   };
 
   return (
-    <SceneComponent antialias onSceneReady={onSceneReady} onRender={onRender} />
+    <SceneComponent
+      antialias
+      onSceneReady={onSceneReady}
+      onRender={onRender}
+      id={'my-canvas'}
+    />
   );
 }
 
