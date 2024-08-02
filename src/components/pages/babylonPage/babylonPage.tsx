@@ -1,10 +1,10 @@
 import React from 'react';
-import Sample from './_fragments/sample';
+import StarterSceneCode from './_fragments/features/starterSceneCode';
 
 const BabylonPage = () => {
   return (
     <>
-      <Sample />
+      <StarterSceneCode />
     </>
   );
 };
