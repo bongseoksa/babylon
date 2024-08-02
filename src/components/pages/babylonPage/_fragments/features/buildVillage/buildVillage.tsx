@@ -34,7 +34,9 @@ const BuildVillage = () => {
     });
 
     // Vilage
-    const box = MeshBuilder.CreateBox('box', { width: 2, height: 1 });
+    const box = MeshBuilder.CreateBox('box', { width: 2, height: 2, depth: 1 });
+    const boxBounding = box.getBoundingInfo().boundingBox; // mesh의 영역 데이터
+    box.position.y = (boxBounding.maximum.y - boxBounding.minimum.y) * 0.5; // 좌표계에서의 최대,최소 데이터를 통해 사이즈 계산
   };
 
   const onRender = (scene: Scene) => {};
