@@ -46,12 +46,16 @@ function StarterSceneCode() {
   };
 
   return (
-    <SceneComponent
-      antialias
-      onSceneReady={onSceneReady}
-      onRender={onRender}
-      id={'my-canvas'}
-    />
+    <div>
+      <SceneComponent
+        antialias
+        onSceneReady={onSceneReady}
+        onRender={onRender}
+        id={'my-canvas'}
+        width={'1280'}
+        height={'720'}
+      />
+    </div>
   );
 }
 
