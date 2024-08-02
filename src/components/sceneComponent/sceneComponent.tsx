@@ -6,8 +6,8 @@ type SceneComponentType = {
   engineOptions?: EngineOptions;
   adaptToDeviceRatio?: boolean;
   sceneOptions?: SceneOptions;
-  onRender: (scene: Scene, engine: Engine) => void;
-  onSceneReady: (scene: Scene, engine: Engine) => void;
+  onRender: (scene: Scene) => void;
+  onSceneReady: (scene: Scene) => void;
   [key: string]: any; //rest 옵션
 };
 
@@ -35,13 +35,13 @@ const SceneComponent = ({
     const scene = new Scene(engine, sceneOptions);
 
     if (scene.isReady()) {
-      onSceneReady(scene, engine);
+      onSceneReady(scene);
     } else {
-      scene.onReadyObservable.addOnce((scene) => onSceneReady(scene, engine));
+      scene.onReadyObservable.addOnce((scene) => onSceneReady(scene));
     }
 
     engine.runRenderLoop(() => {
-      if (typeof onRender === 'function') onRender(scene, engine);
+      if (typeof onRender === 'function') onRender(scene);
       scene.render();
     });
 

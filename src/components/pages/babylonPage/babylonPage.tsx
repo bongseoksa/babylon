@@ -8,6 +8,7 @@ import {
   Mesh,
 } from '@babylonjs/core';
 import SceneComponent from '@/components/sceneComponent';
+// import SceneComponent from 'babylonjs-hook';
 
 function BabylonPage() {
   let box: Mesh;
