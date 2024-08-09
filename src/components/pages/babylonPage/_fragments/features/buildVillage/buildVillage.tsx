@@ -7,6 +7,7 @@ import {
   Scene,
   Sound,
   Vector3,
+  Tools,
 } from '@babylonjs/core';
 
 let music: Sound;
@@ -40,9 +41,10 @@ const onSceneReady = (scene: Scene) => {
   });
 
   // Vilage
-  const box = MeshBuilder.CreateBox('box', { width: 2, height: 2, depth: 1 });
+  const box = MeshBuilder.CreateBox('box', { width: 2, height: 1.5, depth: 3 });
   const boxBounding = box.getBoundingInfo().boundingBox; // mesh의 영역 데이터
   box.position.y = (boxBounding.maximum.y - boxBounding.minimum.y) * 0.5; // 좌표계에서의 최대,최소 데이터를 통해 사이즈 계산
+  box.rotation.y = Tools.ToRadians(45);
 };
 
 const onRender = (scene: Scene) => {};
