@@ -48,8 +48,7 @@ const onSceneReady = (scene: Scene) => {
 const onRender = (scene: Scene) => {};
 
 const onUserGesture = (e: any) => {
-  if (!music) return;
-
+  if (!music || music?.isPlaying) return;
   music.stop();
   music.play();
 };
