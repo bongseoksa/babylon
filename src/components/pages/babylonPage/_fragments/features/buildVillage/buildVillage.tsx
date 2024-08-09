@@ -17,17 +17,17 @@ const onSceneReady = (scene: Scene) => {
   // Camera
   const camera = new ArcRotateCamera(
     'camera1',
-    -Math.PI * 0.5,
-    Math.PI * 0.25,
+    -Math.PI / 2,
+    Math.PI / 2.5,
     10,
     new Vector3(0, 0, 0),
   );
-  camera.setTarget(Vector3.Zero());
+  // camera.setTarget(Vector3.Zero());
   camera.attachControl(canvas, true);
 
   // Light
-  const light = new HemisphericLight('light1', new Vector3(0, 1, 0), scene);
-  light.intensity = 0.7; // 빛 강도 0 ~ 1
+  const light = new HemisphericLight('light1', new Vector3(1, 1, 0), scene);
+  // light.intensity = 0.7; // 빛 강도 0 ~ 1
 
   // Sound
   music = new Sound('cello', 'sounds/cellolong.wav', scene, null, {
@@ -40,11 +40,20 @@ const onSceneReady = (scene: Scene) => {
     height: 10,
   });
 
-  // Vilage
-  const box = MeshBuilder.CreateBox('box', { width: 2, height: 1.5, depth: 3 });
+  /* Vilage */
+  // box
+  const box = MeshBuilder.CreateBox('box', {});
   const boxBounding = box.getBoundingInfo().boundingBox; // mesh의 영역 데이터
   box.position.y = (boxBounding.maximum.y - boxBounding.minimum.y) * 0.5; // 좌표계에서의 최대,최소 데이터를 통해 사이즈 계산
-  box.rotation.y = Tools.ToRadians(45);
+  // roof
+  const roof = MeshBuilder.CreateCylinder('roof', {
+    diameter: 1.3,
+    height: 1.2,
+    tessellation: 3,
+  });
+  roof.scaling = new Vector3(0.75, 1, 1);
+  roof.rotation.z = Math.PI / 2;
+  roof.position.y = 1.22;
 };
 
 const onRender = (scene: Scene) => {};
