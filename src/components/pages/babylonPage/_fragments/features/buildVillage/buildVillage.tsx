@@ -11,6 +11,7 @@ import {
   StandardMaterial,
   Texture,
   Color3,
+  Vector4,
 } from '@babylonjs/core';
 
 let music: Sound;
@@ -37,29 +38,43 @@ const onSceneReady = (scene: Scene) => {
     loop: true,
   });
 
+  /** ----- Materials ----- */
+  // Ground
+  const groundMaterial = new StandardMaterial('groundMat');
+  groundMaterial.diffuseColor = new Color3(0, 1, 0);
+  // Box
+  const boxMaterial = new StandardMaterial('boxMat');
+  boxMaterial.diffuseTexture = new Texture(
+    'https://assets.babylonjs.com/environments/cubehouse.png',
+  );
+  // Roof
+  const roofMaterial = new StandardMaterial('roofMat');
+  roofMaterial.diffuseTexture = new Texture(
+    'https://assets.babylonjs.com/environments/roof.jpg',
+    scene,
+  );
+  /* Material for each box side
+  faceUV index 순서: 뒷면(0) -> 앞면(1) -> 우측면(2) -> 좌측면(3) -> 상면(4) -> 하면(5)
+  Vector4(좌하단x, 좌하단y, 우상단x, 우상단y) : 0 ~ 1 비율 사이의 이미지 offset */
+  const faceUV = [];
+  faceUV[0] = new Vector4(0.5, 0.0, 0.75, 1.0); //rear face
+  faceUV[1] = new Vector4(0.0, 0.0, 0.25, 1.0); //front face
+  faceUV[2] = new Vector4(0.25, 0, 0.5, 1.0); //right side
+  faceUV[3] = new Vector4(0.75, 0, 1.0, 1.0); //left side
+
+  /** ----- World Objects ----- */
   // Ground
   const ground = MeshBuilder.CreateGround('ground', {
     width: 10,
     height: 10,
   });
-  // Ground - material
-  const groundMaterial = new StandardMaterial('groundMat');
-  groundMaterial.diffuseColor = new Color3(0, 1, 0);
   ground.material = groundMaterial;
-
-  /* Vilage */
-  // box - mesh
-  const box = MeshBuilder.CreateBox('box', {});
+  // Box
+  const box = MeshBuilder.CreateBox('box', { faceUV: faceUV, wrap: true });
   const boxBounding = box.getBoundingInfo().boundingBox; // mesh의 영역 데이터
   box.position.y = (boxBounding.maximum.y - boxBounding.minimum.y) * 0.5; // 좌표계에서의 최대,최소 데이터를 통해 사이즈 계산
-  // box - material
-  const boxMaterial = new StandardMaterial('boxMat');
-  boxMaterial.diffuseTexture = new Texture(
-    'https://www.babylonjs-playground.com/textures/floor.png',
-  );
   box.material = boxMaterial;
-
-  // roof - mesh
+  // Roof
   const roof = MeshBuilder.CreateCylinder('roof', {
     diameter: 1.3,
     height: 1.2,
@@ -68,12 +83,6 @@ const onSceneReady = (scene: Scene) => {
   roof.scaling = new Vector3(0.75, 1, 1);
   roof.rotation.z = Math.PI / 2;
   roof.position.y = 1.22;
-  // roof - material
-  const roofMaterial = new StandardMaterial('roofMat');
-  roofMaterial.diffuseTexture = new Texture(
-    'https://assets.babylonjs.com/environments/roof.jpg',
-    scene,
-  );
   roof.material = roofMaterial;
 };
 
