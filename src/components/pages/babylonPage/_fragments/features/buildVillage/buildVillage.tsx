@@ -45,7 +45,7 @@ const onSceneReady = (scene: Scene) => {
   // Box
   const boxMaterial = new StandardMaterial('boxMat');
   boxMaterial.diffuseTexture = new Texture(
-    'https://assets.babylonjs.com/environments/cubehouse.png',
+    'https://assets.babylonjs.com/environments/semihouse.png',
   );
   // Roof
   const roofMaterial = new StandardMaterial('roofMat');
@@ -57,10 +57,12 @@ const onSceneReady = (scene: Scene) => {
   faceUV index 순서: 뒷면(0) -> 앞면(1) -> 우측면(2) -> 좌측면(3) -> 상면(4) -> 하면(5)
   Vector4(좌하단x, 좌하단y, 우상단x, 우상단y) : 0 ~ 1 비율 사이의 이미지 offset */
   const faceUV = [];
-  faceUV[0] = new Vector4(0.5, 0.0, 0.75, 1.0); //rear face
-  faceUV[1] = new Vector4(0.0, 0.0, 0.25, 1.0); //front face
-  faceUV[2] = new Vector4(0.25, 0, 0.5, 1.0); //right side
-  faceUV[3] = new Vector4(0.75, 0, 1.0, 1.0); //left side
+  faceUV[0] = new Vector4(0.6, 0.0, 1.0, 1.0); //rear face
+  faceUV[1] = new Vector4(0.0, 0.0, 0.4, 1.0); //front face
+  faceUV[2] = new Vector4(0.4, 0, 0.6, 1.0); //right side
+  faceUV[3] = new Vector4(0.4, 0, 0.6, 1.0); //left side
+  faceUV[4] = Vector4.Zero; //top side
+  faceUV[5] = Vector4.Zero; //bottom side
 
   /** ----- World Objects ----- */
   // Ground
