@@ -8,6 +8,9 @@ import {
   Sound,
   Vector3,
   Tools,
+  StandardMaterial,
+  Texture,
+  Color3,
 } from '@babylonjs/core';
 
 let music: Sound;
@@ -39,13 +42,24 @@ const onSceneReady = (scene: Scene) => {
     width: 10,
     height: 10,
   });
+  // Ground - material
+  const groundMaterial = new StandardMaterial('groundMat');
+  groundMaterial.diffuseColor = new Color3(0, 1, 0);
+  ground.material = groundMaterial;
 
   /* Vilage */
-  // box
+  // box - mesh
   const box = MeshBuilder.CreateBox('box', {});
   const boxBounding = box.getBoundingInfo().boundingBox; // mesh의 영역 데이터
   box.position.y = (boxBounding.maximum.y - boxBounding.minimum.y) * 0.5; // 좌표계에서의 최대,최소 데이터를 통해 사이즈 계산
-  // roof
+  // box - material
+  const boxMaterial = new StandardMaterial('boxMat');
+  boxMaterial.diffuseTexture = new Texture(
+    'https://www.babylonjs-playground.com/textures/floor.png',
+  );
+  box.material = boxMaterial;
+
+  // roof - mesh
   const roof = MeshBuilder.CreateCylinder('roof', {
     diameter: 1.3,
     height: 1.2,
@@ -54,6 +68,13 @@ const onSceneReady = (scene: Scene) => {
   roof.scaling = new Vector3(0.75, 1, 1);
   roof.rotation.z = Math.PI / 2;
   roof.position.y = 1.22;
+  // roof - material
+  const roofMaterial = new StandardMaterial('roofMat');
+  roofMaterial.diffuseTexture = new Texture(
+    'https://assets.babylonjs.com/environments/roof.jpg',
+    scene,
+  );
+  roof.material = roofMaterial;
 };
 
 const onRender = (scene: Scene) => {};
