@@ -107,7 +107,14 @@ const createScene = (scene: Scene) => {
   const box = buildBox();
   const roof = buildRoof();
 
-  const house = Mesh.MergeMeshes([box, roof]);
+  const house = Mesh.MergeMeshes(
+    [box, roof],
+    true,
+    false,
+    undefined,
+    false,
+    true, // 메쉬 세분화, 다중 머테리얼 허용여부
+  );
 };
 
 const onSceneReady = (scene: Scene) => {
