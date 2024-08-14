@@ -106,6 +106,8 @@ const createScene = (scene: Scene) => {
   const ground = buildGround();
   const box = buildBox();
   const roof = buildRoof();
+
+  const house = Mesh.MergeMeshes([box, roof]);
 };
 
 const onSceneReady = (scene: Scene) => {
