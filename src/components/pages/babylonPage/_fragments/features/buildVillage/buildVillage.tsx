@@ -25,8 +25,8 @@ const buildGround = () => {
 
   // Ground
   const ground = MeshBuilder.CreateGround('ground', {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 16,
   });
   ground.material = groundMaterial;
 
@@ -97,7 +97,7 @@ const buildRoof = (width: 1 | 2 = 1) => {
   return roof;
 };
 
-const buildHouse = (width: 1 | 2 = 1) => {
+const buildHouse = (width: 1 | 2 = 1): Mesh => {
   const box = buildBox(width);
   const roof = buildRoof(width);
 
@@ -108,7 +108,53 @@ const buildHouse = (width: 1 | 2 = 1) => {
     undefined,
     false,
     true, // 메쉬 세분화, 다중 머테리얼 허용여부
-  );
+  ) as Mesh;
+};
+
+/** 주거지 생성 */
+const buildDwellings = () => {
+  const ground = buildGround();
+  const detached_house = buildHouse(1); // 짧은 하우스
+  detached_house.rotation.y = -Math.PI / 16;
+  detached_house.position.x = -6.8;
+  detached_house.position.z = 2.5;
+
+  const semi_house = buildHouse(2); // 긴 하우스
+  semi_house.rotation.y = -Math.PI / 16;
+  semi_house.position.x = -4.5;
+  semi_house.position.z = 3;
+
+  const places = []; //each entry is an array [house type, rotation, x, z]
+  places.push([1, -Math.PI / 16, -6.8, 2.5]);
+  places.push([2, -Math.PI / 16, -4.5, 3]);
+  places.push([2, -Math.PI / 16, -1.5, 4]);
+  places.push([2, -Math.PI / 3, 1.5, 6]);
+  places.push([2, (15 * Math.PI) / 16, -6.4, -1.5]);
+  places.push([1, (15 * Math.PI) / 16, -4.1, -1]);
+  places.push([2, (15 * Math.PI) / 16, -2.1, -0.5]);
+  places.push([1, (5 * Math.PI) / 4, 0, -1]);
+  places.push([1, Math.PI + Math.PI / 2.5, 0.5, -3]);
+  places.push([2, Math.PI + Math.PI / 2.1, 0.75, -5]);
+  places.push([1, Math.PI + Math.PI / 2.25, 0.75, -7]);
+  places.push([2, Math.PI / 1.9, 4.75, -1]);
+  places.push([1, Math.PI / 1.95, 4.5, -3]);
+  places.push([2, Math.PI / 1.9, 4.75, -5]);
+  places.push([1, Math.PI / 1.9, 4.75, -7]);
+  places.push([2, -Math.PI / 3, 5.25, 2]);
+  places.push([1, -Math.PI / 3, 6, 4]);
+
+  //Create instances from the first two that were built
+  const houses = [];
+  for (let i = 0; i < places.length; i++) {
+    if (places[i][0] === 1) {
+      houses[i] = detached_house.createInstance('house' + i);
+    } else {
+      houses[i] = semi_house.createInstance('house' + i);
+    }
+    houses[i].rotation.y = places[i][1];
+    houses[i].position.x = places[i][2];
+    houses[i].position.z = places[i][3];
+  }
 };
 
 const createScene = (scene: Scene) => {
@@ -116,10 +162,10 @@ const createScene = (scene: Scene) => {
 
   // Camera
   const camera = new ArcRotateCamera(
-    'camera1',
+    'camera',
     -Math.PI / 2,
     Math.PI / 2.5,
-    10,
+    15,
     new Vector3(0, 0, 0),
   );
   // camera.setTarget(Vector3.Zero());
@@ -134,15 +180,8 @@ const createScene = (scene: Scene) => {
     loop: true,
   });
 
-  const ground = buildGround();
-  const house = buildHouse(2);
+  buildDwellings();
 };
-
-const onSceneReady = (scene: Scene) => {
-  createScene(scene);
-};
-
-const onRender = (scene: Scene) => {};
 
 const onUserGesture = (e: any) => {
   if (!music || music?.isPlaying) return;
@@ -151,6 +190,12 @@ const onUserGesture = (e: any) => {
 };
 
 const BuildVillage = () => {
+  const onSceneReady = (scene: Scene) => {
+    createScene(scene);
+  };
+
+  const onRender = (scene: Scene) => {};
+
   useEffect(() => {
     window.addEventListener('click', onUserGesture);
     return () => {

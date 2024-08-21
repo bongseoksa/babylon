@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babylonjs/core": "^7.17.2",
+    "@babylonjs/loaders": "^7.21.4",
     "@types/axios": "^0.14.0",
     "axios": "^1.7.2",
     "babylonjs-hook": "^0.1.1",
