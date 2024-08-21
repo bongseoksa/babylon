@@ -11,7 +11,12 @@ import { ROUTE_PATH } from '@/router/routeData';
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   useEffect(() => {
-    router.push(ROUTE_PATH['HOME']);
+    console.log('router', router.pathname);
+    let path = router.pathname;
+
+    // 브랜치별로 디폴트 주소 변경
+    if (path === '/') path = ROUTE_PATH['VILLAGE_ANIMATION'];
+    router.push(path);
   }, []);
 
   return (

@@ -10,7 +10,7 @@ import {
 import SceneComponent from '@/components/sceneComponent';
 // import SceneComponent from 'babylonjs-hook';
 
-function StarterSceneCode() {
+function StarterSceneCodePage() {
   let box: Mesh;
 
   const onSceneReady = (scene: Scene) => {
@@ -59,4 +59,4 @@ function StarterSceneCode() {
   );
 }
 
-export default StarterSceneCode;
+export default StarterSceneCodePage;

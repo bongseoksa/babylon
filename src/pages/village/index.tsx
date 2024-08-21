@@ -1,5 +1,5 @@
 import React from 'react';
-import BabylonPage from '@/components/pages/babylonPage';
+import BabylonPage from '@/components/pages/villagePage';
 
 function Babylon() {
   return <BabylonPage />;

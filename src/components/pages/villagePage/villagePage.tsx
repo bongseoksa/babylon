@@ -1,8 +1,7 @@
 import React from 'react';
-import StarterSceneCode from './_fragments/features/starterSceneCode';
 import BuildVillage from './_fragments/features/buildVillage/buildVillage';
 
-const BabylonPage = () => {
+const VillagePage = () => {
   return (
     <>
       {/* <StarterSceneCode /> */}
@@ -11,4 +10,4 @@ const BabylonPage = () => {
   );
 };
 
-export default BabylonPage;
+export default VillagePage;
