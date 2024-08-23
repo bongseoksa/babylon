@@ -11,7 +11,6 @@ import { ROUTE_PATH } from '@/router/routeData';
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   useEffect(() => {
-    console.log('router', router.pathname);
     let path = router.pathname;
 
     // 브랜치별로 디폴트 주소 변경
