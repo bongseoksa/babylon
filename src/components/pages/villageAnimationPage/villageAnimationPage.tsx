@@ -1,6 +1,7 @@
 import React from 'react';
 import SceneComponent from 'babylonjs-hook';
 import * as BABYLON from '@babylonjs/core';
+import earcut from 'earcut';
 
 const VillageAnimationPage = () => {
   /** 텍스트 택스처 생성 */
@@ -132,87 +133,39 @@ const VillageAnimationPage = () => {
       'light',
       new BABYLON.Vector3(1, 1, 0),
     );
-    const light2 = new BABYLON.HemisphericLight(
-      'light',
-      new BABYLON.Vector3(-1, -1, 0),
-    );
-
-    /* 육면체 면 색상 설정*/
-    const faceColors: BABYLON.Color4[] = [];
-    // Z 방향 면
-    faceColors[0] = new BABYLON.Color4(
-      BABYLON.Color3.Blue().r,
-      BABYLON.Color3.Blue().g,
-      BABYLON.Color3.Blue().b,
-      1,
-    );
-    faceColors[1] = new BABYLON.Color4(
-      BABYLON.Color3.Teal().r,
-      BABYLON.Color3.Teal().g,
-      BABYLON.Color3.Teal().b,
-      1,
-    );
-    // X 방향 면
-    faceColors[2] = new BABYLON.Color4(
-      BABYLON.Color3.Red().r,
-      BABYLON.Color3.Red().g,
-      BABYLON.Color3.Red().b,
-      1,
-    );
-    faceColors[3] = new BABYLON.Color4(
-      BABYLON.Color3.Purple().r,
-      BABYLON.Color3.Purple().g,
-      BABYLON.Color3.Purple().b,
-      1,
-    );
-    // Y 방향 면
-    faceColors[4] = new BABYLON.Color4(
-      BABYLON.Color3.Green().r,
-      BABYLON.Color3.Green().g,
-      BABYLON.Color3.Green().b,
-      1,
-    );
-    faceColors[5] = new BABYLON.Color4(
-      BABYLON.Color3.Yellow().r,
-      BABYLON.Color3.Yellow().g,
-      BABYLON.Color3.Yellow().b,
-      1,
-    );
-
-    // 부모 박스
-    const boxParent = BABYLON.MeshBuilder.CreateBox('Box', {
-      faceColors: faceColors,
-    });
-
-    // 자식 박스
-    const boxChild = BABYLON.MeshBuilder.CreateBox('Box', {
-      size: 0.5,
-      faceColors: faceColors,
-    });
-    boxChild.setParent(boxParent);
-    boxChild.position.x = 0;
-    boxChild.position.y = 2;
-    boxChild.position.z = 0;
-
-    boxChild.rotation.x = Math.PI / 4;
-    boxChild.rotation.y = Math.PI / 4;
-    boxChild.rotation.z = Math.PI / 4;
-
-    boxParent.position.x = 2;
-    boxParent.position.y = 0;
-    boxParent.position.z = 0;
-
-    boxParent.rotation.x = 0;
-    boxParent.rotation.y = 0;
-    boxParent.rotation.z = -Math.PI / 4;
 
     localAxes(6, scene, true);
-    // 로컬 좌표계
-    const boxChildAxes = localAxes(1, scene, true);
-    boxChildAxes.parent = boxChild;
 
-    const boxParentAxes = localAxes(1, scene, true);
-    boxParentAxes.parent = boxParent;
+    //base
+    const outline = [
+      new BABYLON.Vector3(-0.3, 0, -0.1),
+      new BABYLON.Vector3(0.2, 0, -0.1),
+    ];
+
+    //curved front
+    for (let i = 0; i < 20; i++) {
+      outline.push(
+        new BABYLON.Vector3(
+          0.2 * Math.cos((i * Math.PI) / 40),
+          0,
+          0.2 * Math.sin((i * Math.PI) / 40) - 0.1,
+        ),
+      );
+    }
+
+    //top
+    outline.push(new BABYLON.Vector3(0, 0, 0.1));
+    outline.push(new BABYLON.Vector3(-0.3, 0, 0.1));
+
+    const car = BABYLON.MeshBuilder.ExtrudePolygon(
+      'car',
+      {
+        shape: outline,
+        depth: 0.2,
+      },
+      scene,
+      earcut,
+    );
   };
 
   return (
