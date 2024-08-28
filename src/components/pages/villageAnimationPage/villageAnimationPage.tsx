@@ -117,25 +117,8 @@ const VillageAnimationPage = () => {
     return local_origin;
   };
 
-  const onSceneReady = (scene: BABYLON.Scene) => {
-    const canvas = scene.getEngine().getRenderingCanvas();
-
-    const camera = new BABYLON.ArcRotateCamera(
-      'camera',
-      -Math.PI / 4,
-      Math.PI / 4,
-      15,
-      new BABYLON.Vector3(0, 0, 0),
-      scene,
-    );
-    camera.attachControl(canvas, true);
-    const light = new BABYLON.HemisphericLight(
-      'light',
-      new BABYLON.Vector3(1, 1, 0),
-    );
-
-    localAxes(6, scene, true);
-
+  /** 차 몸체 생성 */
+  const buildCar = (scene: BABYLON.Scene) => {
     //base
     const outline = [
       new BABYLON.Vector3(-0.3, 0, -0.1),
@@ -166,6 +149,48 @@ const VillageAnimationPage = () => {
       scene,
       earcut,
     );
+
+    return car;
+  };
+
+  const onSceneReady = (scene: BABYLON.Scene) => {
+    const canvas = scene.getEngine().getRenderingCanvas();
+
+    const camera = new BABYLON.ArcRotateCamera(
+      'camera',
+      -Math.PI / 4,
+      Math.PI / 4,
+      15,
+      new BABYLON.Vector3(0, 0, 0),
+      scene,
+    );
+    camera.attachControl(canvas, true);
+    camera.wheelPrecision = 10; // zoom 속도 조절. 값이 커질수록 느려짐
+    const light = new BABYLON.HemisphericLight(
+      'light',
+      new BABYLON.Vector3(1, 1, 0),
+    );
+
+    localAxes(6, scene, true);
+
+    const car = buildCar(scene);
+    const wheelRB = BABYLON.MeshBuilder.CreateCylinder('wheelRB', {
+      diameter: 0.125,
+      height: 0.05,
+    });
+    wheelRB.parent = car;
+    wheelRB.position.z = -0.1;
+    wheelRB.position.x = -0.2;
+    wheelRB.position.y = 0.035;
+
+    const wheelRF = wheelRB.clone('wheelRF');
+    wheelRF.position.x = 0.1;
+
+    const wheelLB = wheelRB.clone('wheelLB');
+    wheelLB.position.y = -0.2 - 0.035;
+
+    const wheelLF = wheelRF.clone('wheelLF');
+    wheelLF.position.y = -0.2 - 0.035;
   };
 
   return (
