@@ -2,6 +2,7 @@ import React from 'react';
 import SceneComponent from 'babylonjs-hook';
 import * as BABYLON from '@babylonjs/core';
 import earcut from 'earcut';
+import { buildDwellings } from '../villagePage/_fragments/features/buildVillage/buildVillage';
 
 const VillageAnimationPage = () => {
   /** 텍스트 택스처 생성 */
@@ -180,7 +181,7 @@ const VillageAnimationPage = () => {
   //     'https://assets.babylonjs.com/environments/wheel.png',
   //   );
 
-  //   const wheel = BABYLON.MeshBuilder.CreateCylinder('wheelRB', {
+  //   const wheel = BABYLON.MeshBuilder.CreateCylinder('wheel', {
   //     diameter: 0.125,
   //     height: 0.05,
   //     faceUV: wheelUV,
@@ -240,16 +241,18 @@ const VillageAnimationPage = () => {
   const runCarAnimation = (scene: BABYLON.Scene) => {
     const animCar = new BABYLON.Animation(
       'carAnimation',
-      'position.x',
+      'position.z',
       30,
       BABYLON.Animation.ANIMATIONTYPE_FLOAT,
       BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE,
     );
 
     const carKeys: { frame: number; value: number }[] = [];
-    carKeys.push({ frame: 0, value: -4 });
-    carKeys.push({ frame: 150, value: 4 }); // 5초(30fps* 5s) = 150frame
-    carKeys.push({ frame: 210, value: 4 }); // 7초
+    carKeys.push({ frame: 0, value: 8 });
+
+    carKeys.push({ frame: 150, value: -7 });
+
+    carKeys.push({ frame: 200, value: -7 });
 
     animCar.setKeys(carKeys);
 
@@ -259,7 +262,7 @@ const VillageAnimationPage = () => {
     car.animations = [];
     car.animations.push(animCar);
 
-    scene.beginAnimation(car, 0, 210, true);
+    scene.beginAnimation(car, 0, 200, true);
   };
 
   const onSceneReady = async (scene: BABYLON.Scene) => {
@@ -269,7 +272,7 @@ const VillageAnimationPage = () => {
       'camera',
       -Math.PI / 2,
       Math.PI / 2.5,
-      3,
+      15,
       new BABYLON.Vector3(0, 0, 0),
     );
     camera.attachControl(canvas, true);
@@ -280,12 +283,20 @@ const VillageAnimationPage = () => {
     );
 
     localAxes(6, scene, true);
-
-    const car = await BABYLON.SceneLoader.ImportMeshAsync(
+    const village = buildDwellings();
+    await BABYLON.SceneLoader.ImportMeshAsync(
       '',
       'https://assets.babylonjs.com/meshes/',
       'car.babylon',
     );
+
+    const car: BABYLON.AbstractMesh = scene.getMeshByName(
+      'car',
+    ) as BABYLON.AbstractMesh;
+    car.rotation = new BABYLON.Vector3(-Math.PI / 2, Math.PI, -Math.PI / 2);
+    car.position.y = 0.16;
+    car.position.x = 3;
+    car.position.z = 8;
 
     runWheelAnimation(scene);
     runCarAnimation(scene);
