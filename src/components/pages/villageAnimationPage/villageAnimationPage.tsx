@@ -119,7 +119,7 @@ const VillageAnimationPage = () => {
 
   /** 차 몸체 생성 */
   const buildCar = (scene: BABYLON.Scene) => {
-    //base
+    // base;
     const outline = [
       new BABYLON.Vector3(-0.3, 0, -0.1),
       new BABYLON.Vector3(0.2, 0, -0.1),
@@ -140,15 +140,30 @@ const VillageAnimationPage = () => {
     outline.push(new BABYLON.Vector3(0, 0, 0.1));
     outline.push(new BABYLON.Vector3(-0.3, 0, 0.1));
 
+    //face UVs
+    const faceUV: BABYLON.Vector4[] = [];
+    faceUV[0] = new BABYLON.Vector4(0, 0.5, 0.38, 1);
+    faceUV[1] = new BABYLON.Vector4(0, 0, 1, 0.5);
+    faceUV[2] = new BABYLON.Vector4(0.38, 1, 0, 0.5);
+
+    //material
+    const carMat = new BABYLON.StandardMaterial('carMat');
+    carMat.diffuseTexture = new BABYLON.Texture(
+      'https://assets.babylonjs.com/environments/car.png',
+    );
+
     const car = BABYLON.MeshBuilder.ExtrudePolygon(
       'car',
       {
         shape: outline,
         depth: 0.2,
+        faceUV: faceUV,
+        wrap: true,
       },
       scene,
       earcut,
     );
+    car.material = carMat;
 
     return car;
   };
@@ -158,11 +173,10 @@ const VillageAnimationPage = () => {
 
     const camera = new BABYLON.ArcRotateCamera(
       'camera',
-      -Math.PI / 4,
-      Math.PI / 4,
-      15,
+      -Math.PI / 2,
+      Math.PI / 2.5,
+      3,
       new BABYLON.Vector3(0, 0, 0),
-      scene,
     );
     camera.attachControl(canvas, true);
     camera.wheelPrecision = 10; // zoom 속도 조절. 값이 커질수록 느려짐
@@ -174,14 +188,28 @@ const VillageAnimationPage = () => {
     localAxes(6, scene, true);
 
     const car = buildCar(scene);
+    car.rotation.x = -Math.PI / 2;
+
+    const wheelUV: BABYLON.Vector4[] = [];
+    wheelUV[0] = new BABYLON.Vector4(0, 0, 1, 1);
+    wheelUV[1] = new BABYLON.Vector4(0, 0.5, 0, 0.5);
+    wheelUV[2] = new BABYLON.Vector4(0, 0, 1, 1);
+
+    const wheelMat = new BABYLON.StandardMaterial('wheelMat');
+    wheelMat.diffuseTexture = new BABYLON.Texture(
+      'https://assets.babylonjs.com/environments/wheel.png',
+    );
+
     const wheelRB = BABYLON.MeshBuilder.CreateCylinder('wheelRB', {
       diameter: 0.125,
       height: 0.05,
+      faceUV: wheelUV,
     });
     wheelRB.parent = car;
     wheelRB.position.z = -0.1;
     wheelRB.position.x = -0.2;
     wheelRB.position.y = 0.035;
+    wheelRB.material = wheelMat;
 
     const wheelRF = wheelRB.clone('wheelRF');
     wheelRF.position.x = 0.1;
