@@ -300,6 +300,19 @@ const VillageAnimationPage = () => {
 
     runWheelAnimation(scene);
     runCarAnimation(scene);
+
+    BABYLON.SceneLoader.ImportMeshAsync(
+      'him',
+      '/assets/dude/scenes/',
+      'Dude.babylon',
+      scene,
+    ).then((result) => {
+      console.log('result', result);
+      var dude = result.meshes[0];
+      dude.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25);
+
+      scene.beginAnimation(result.skeletons[0], 0, 100, true, 1.0);
+    });
   };
 
   return (
