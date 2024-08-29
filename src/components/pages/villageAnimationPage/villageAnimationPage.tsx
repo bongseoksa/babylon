@@ -118,102 +118,103 @@ const VillageAnimationPage = () => {
   };
 
   /** 차 몸체 생성 */
-  const buildCar = (scene: BABYLON.Scene) => {
-    // base;
-    const outline = [
-      new BABYLON.Vector3(-0.3, 0, -0.1),
-      new BABYLON.Vector3(0.2, 0, -0.1),
-    ];
+  // const buildCar = (scene: BABYLON.Scene) => {
+  //   // base;
+  //   const outline = [
+  //     new BABYLON.Vector3(-0.3, 0, -0.1),
+  //     new BABYLON.Vector3(0.2, 0, -0.1),
+  //   ];
 
-    //curved front
-    for (let i = 0; i < 20; i++) {
-      outline.push(
-        new BABYLON.Vector3(
-          0.2 * Math.cos((i * Math.PI) / 40),
-          0,
-          0.2 * Math.sin((i * Math.PI) / 40) - 0.1,
-        ),
-      );
-    }
+  //   //curved front
+  //   for (let i = 0; i < 20; i++) {
+  //     outline.push(
+  //       new BABYLON.Vector3(
+  //         0.2 * Math.cos((i * Math.PI) / 40),
+  //         0,
+  //         0.2 * Math.sin((i * Math.PI) / 40) - 0.1,
+  //       ),
+  //     );
+  //   }
 
-    //top
-    outline.push(new BABYLON.Vector3(0, 0, 0.1));
-    outline.push(new BABYLON.Vector3(-0.3, 0, 0.1));
+  //   //top
+  //   outline.push(new BABYLON.Vector3(0, 0, 0.1));
+  //   outline.push(new BABYLON.Vector3(-0.3, 0, 0.1));
 
-    //face UVs
-    const faceUV: BABYLON.Vector4[] = [];
-    faceUV[0] = new BABYLON.Vector4(0, 0.5, 0.38, 1);
-    faceUV[1] = new BABYLON.Vector4(0, 0, 1, 0.5);
-    faceUV[2] = new BABYLON.Vector4(0.38, 1, 0, 0.5);
+  //   //face UVs
+  //   const faceUV: BABYLON.Vector4[] = [];
+  //   faceUV[0] = new BABYLON.Vector4(0, 0.5, 0.38, 1);
+  //   faceUV[1] = new BABYLON.Vector4(0, 0, 1, 0.5);
+  //   faceUV[2] = new BABYLON.Vector4(0.38, 1, 0, 0.5);
 
-    //material
-    const carMat = new BABYLON.StandardMaterial('carMat');
-    carMat.diffuseTexture = new BABYLON.Texture(
-      'https://assets.babylonjs.com/environments/car.png',
-    );
+  //   //material
+  //   const carMat = new BABYLON.StandardMaterial('carMat');
+  //   carMat.diffuseTexture = new BABYLON.Texture(
+  //     'https://assets.babylonjs.com/environments/car.png',
+  //   );
 
-    const car = BABYLON.MeshBuilder.ExtrudePolygon(
-      'car',
-      {
-        shape: outline,
-        depth: 0.2,
-        faceUV: faceUV,
-        wrap: true,
-      },
-      scene,
-      earcut,
-    );
-    car.material = carMat;
+  //   const car = BABYLON.MeshBuilder.ExtrudePolygon(
+  //     'car',
+  //     {
+  //       shape: outline,
+  //       depth: 0.2,
+  //       faceUV: faceUV,
+  //       wrap: true,
+  //     },
+  //     scene,
+  //     earcut,
+  //   );
+  //   car.material = carMat;
 
-    return car;
-  };
+  //   return car;
+  // };
 
-  const buildWheel = (scene: BABYLON.Scene, parent?: BABYLON.Mesh) => {
-    const wheelUV: BABYLON.Vector4[] = [];
-    wheelUV[0] = new BABYLON.Vector4(0, 0, 1, 1);
-    wheelUV[1] = new BABYLON.Vector4(0, 0.5, 0, 0.5);
-    wheelUV[2] = new BABYLON.Vector4(0, 0, 1, 1);
+  /** 바퀴 생성 */
+  // const buildWheel = (scene: BABYLON.Scene, parent?: BABYLON.Mesh) => {
+  //   const wheelUV: BABYLON.Vector4[] = [];
+  //   wheelUV[0] = new BABYLON.Vector4(0, 0, 1, 1);
+  //   wheelUV[1] = new BABYLON.Vector4(0, 0.5, 0, 0.5);
+  //   wheelUV[2] = new BABYLON.Vector4(0, 0, 1, 1);
 
-    const wheelMat = new BABYLON.StandardMaterial('wheelMat');
-    wheelMat.diffuseTexture = new BABYLON.Texture(
-      'https://assets.babylonjs.com/environments/wheel.png',
-    );
+  //   const wheelMat = new BABYLON.StandardMaterial('wheelMat');
+  //   wheelMat.diffuseTexture = new BABYLON.Texture(
+  //     'https://assets.babylonjs.com/environments/wheel.png',
+  //   );
 
-    const wheel = BABYLON.MeshBuilder.CreateCylinder('wheelRB', {
-      diameter: 0.125,
-      height: 0.05,
-      faceUV: wheelUV,
-    });
-    if (parent) {
-      wheel.parent = parent;
-    }
-    wheel.position.z = -0.1;
-    wheel.position.x = -0.2;
-    wheel.position.y = 0.035;
-    wheel.material = wheelMat;
+  //   const wheel = BABYLON.MeshBuilder.CreateCylinder('wheelRB', {
+  //     diameter: 0.125,
+  //     height: 0.05,
+  //     faceUV: wheelUV,
+  //   });
+  //   if (parent) {
+  //     wheel.parent = parent;
+  //   }
+  //   wheel.position.z = -0.1;
+  //   wheel.position.x = -0.2;
+  //   wheel.position.y = 0.035;
+  //   wheel.material = wheelMat;
 
-    //Animate the Wheels
-    const animWheel = new BABYLON.Animation(
-      'wheelAnimation',
-      'rotation.y',
-      30,
-      BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-      BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE,
-    );
+  //   //Animate the Wheels
+  //   const animWheel = new BABYLON.Animation(
+  //     'wheelAnimation',
+  //     'rotation.y',
+  //     30,
+  //     BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+  //     BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE,
+  //   );
 
-    const wheelKeys: { frame: number; value: number }[] = [];
-    wheelKeys.push({ frame: 0, value: 0 }); // 0 프레임에 회전0
-    wheelKeys.push({ frame: 30, value: 2 * Math.PI }); // 30프레임에 1바퀴 회전
+  //   const wheelKeys: { frame: number; value: number }[] = [];
+  //   wheelKeys.push({ frame: 0, value: 0 }); // 0 프레임에 회전0
+  //   wheelKeys.push({ frame: 30, value: 2 * Math.PI }); // 30프레임에 1바퀴 회전
 
-    animWheel.setKeys(wheelKeys);
+  //   animWheel.setKeys(wheelKeys);
 
-    wheel.animations = [];
-    wheel.animations.push(animWheel);
+  //   wheel.animations = [];
+  //   wheel.animations.push(animWheel);
 
-    return wheel;
-  };
+  //   return wheel;
+  // };
 
-  const onSceneReady = (scene: BABYLON.Scene) => {
+  const onSceneReady = async (scene: BABYLON.Scene) => {
     const canvas = scene.getEngine().getRenderingCanvas();
 
     const camera = new BABYLON.ArcRotateCamera(
@@ -232,17 +233,28 @@ const VillageAnimationPage = () => {
 
     localAxes(6, scene, true);
 
-    const car = buildCar(scene);
-    car.rotation.x = -Math.PI / 2;
+    const car = await BABYLON.SceneLoader.ImportMeshAsync(
+      '',
+      'https://assets.babylonjs.com/meshes/',
+      'car.babylon',
+    );
 
-    const wheelRB = buildWheel(scene, car);
-    const wheelRF = wheelRB.clone('wheelRF');
-    wheelRF.position.x = 0.1;
-    const wheelLB = wheelRB.clone('wheelLB');
-    wheelLB.position.y = -0.2 - 0.035;
-    const wheelLF = wheelRF.clone('wheelLF');
-    wheelLF.position.y = -0.2 - 0.035;
+    // Mesh 데이터 내에서 특정 Mesh 조회
+    const wheelRB = car.meshes.find((mesh) => mesh.name === 'wheelRB');
+    const wheelRF = car.meshes.find((mesh) => mesh.name === 'wheelRF');
+    const wheelLB = car.meshes.find((mesh) => mesh.name === 'wheelLB');
+    const wheelLF = car.meshes.find((mesh) => mesh.name === 'wheelLF');
+    wheelRB?.beginAnimation('', true, 30, () => {
+      console.log('end');
+    });
 
+    // 씬 내에서 특정 Mesh 조회
+    // const wheelRB = scene.getMeshByName('wheelRB');
+    // const wheelRF = scene.getMeshByName('wheelRF');
+    // const wheelLB = scene.getMeshByName('wheelLB');
+    // const wheelLF = scene.getMeshByName('wheelLF');
+
+    // 특정 Mesh 애니메이션 실행
     scene.beginAnimation(wheelRB, 0, 30, true);
     scene.beginAnimation(wheelRF, 0, 30, true);
     scene.beginAnimation(wheelLB, 0, 30, true);
