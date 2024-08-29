@@ -210,8 +210,6 @@ const VillageAnimationPage = () => {
     wheel.animations = [];
     wheel.animations.push(animWheel);
 
-    scene.beginAnimation(wheel, 0, 30, true);
-
     return wheel;
   };
 
@@ -238,15 +236,17 @@ const VillageAnimationPage = () => {
     car.rotation.x = -Math.PI / 2;
 
     const wheelRB = buildWheel(scene, car);
-
     const wheelRF = wheelRB.clone('wheelRF');
     wheelRF.position.x = 0.1;
-
     const wheelLB = wheelRB.clone('wheelLB');
     wheelLB.position.y = -0.2 - 0.035;
-
     const wheelLF = wheelRF.clone('wheelLF');
     wheelLF.position.y = -0.2 - 0.035;
+
+    scene.beginAnimation(wheelRB, 0, 30, true);
+    scene.beginAnimation(wheelRF, 0, 30, true);
+    scene.beginAnimation(wheelLB, 0, 30, true);
+    scene.beginAnimation(wheelLF, 0, 30, true);
   };
 
   return (
