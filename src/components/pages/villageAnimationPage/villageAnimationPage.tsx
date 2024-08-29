@@ -168,6 +168,53 @@ const VillageAnimationPage = () => {
     return car;
   };
 
+  const buildWheel = (scene: BABYLON.Scene, parent?: BABYLON.Mesh) => {
+    const wheelUV: BABYLON.Vector4[] = [];
+    wheelUV[0] = new BABYLON.Vector4(0, 0, 1, 1);
+    wheelUV[1] = new BABYLON.Vector4(0, 0.5, 0, 0.5);
+    wheelUV[2] = new BABYLON.Vector4(0, 0, 1, 1);
+
+    const wheelMat = new BABYLON.StandardMaterial('wheelMat');
+    wheelMat.diffuseTexture = new BABYLON.Texture(
+      'https://assets.babylonjs.com/environments/wheel.png',
+    );
+
+    const wheel = BABYLON.MeshBuilder.CreateCylinder('wheelRB', {
+      diameter: 0.125,
+      height: 0.05,
+      faceUV: wheelUV,
+    });
+    if (parent) {
+      wheel.parent = parent;
+    }
+    wheel.position.z = -0.1;
+    wheel.position.x = -0.2;
+    wheel.position.y = 0.035;
+    wheel.material = wheelMat;
+
+    //Animate the Wheels
+    const animWheel = new BABYLON.Animation(
+      'wheelAnimation',
+      'rotation.y',
+      30,
+      BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+      BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE,
+    );
+
+    const wheelKeys: { frame: number; value: number }[] = [];
+    wheelKeys.push({ frame: 0, value: 0 }); // 0 프레임에 회전0
+    wheelKeys.push({ frame: 30, value: 2 * Math.PI }); // 30프레임에 1바퀴 회전
+
+    animWheel.setKeys(wheelKeys);
+
+    wheel.animations = [];
+    wheel.animations.push(animWheel);
+
+    scene.beginAnimation(wheel, 0, 30, true);
+
+    return wheel;
+  };
+
   const onSceneReady = (scene: BABYLON.Scene) => {
     const canvas = scene.getEngine().getRenderingCanvas();
 
@@ -190,26 +237,7 @@ const VillageAnimationPage = () => {
     const car = buildCar(scene);
     car.rotation.x = -Math.PI / 2;
 
-    const wheelUV: BABYLON.Vector4[] = [];
-    wheelUV[0] = new BABYLON.Vector4(0, 0, 1, 1);
-    wheelUV[1] = new BABYLON.Vector4(0, 0.5, 0, 0.5);
-    wheelUV[2] = new BABYLON.Vector4(0, 0, 1, 1);
-
-    const wheelMat = new BABYLON.StandardMaterial('wheelMat');
-    wheelMat.diffuseTexture = new BABYLON.Texture(
-      'https://assets.babylonjs.com/environments/wheel.png',
-    );
-
-    const wheelRB = BABYLON.MeshBuilder.CreateCylinder('wheelRB', {
-      diameter: 0.125,
-      height: 0.05,
-      faceUV: wheelUV,
-    });
-    wheelRB.parent = car;
-    wheelRB.position.z = -0.1;
-    wheelRB.position.x = -0.2;
-    wheelRB.position.y = 0.035;
-    wheelRB.material = wheelMat;
+    const wheelRB = buildWheel(scene, car);
 
     const wheelRF = wheelRB.clone('wheelRF');
     wheelRF.position.x = 0.1;
