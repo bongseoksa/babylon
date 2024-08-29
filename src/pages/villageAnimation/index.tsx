@@ -1,8 +1,11 @@
-import VillageAnimationPage from '@/components/pages/villageAnimationPage';
+import {
+  VillageAnimationPage,
+  AnimationToPath,
+} from '@/components/pages/villageAnimationPage';
 import React from 'react';
 
 const VillageAnimation = () => {
-  return <VillageAnimationPage />;
+  return <AnimationToPath />;
 };
 
 export default VillageAnimation;
