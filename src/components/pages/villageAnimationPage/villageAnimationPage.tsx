@@ -214,6 +214,54 @@ const VillageAnimationPage = () => {
   //   return wheel;
   // };
 
+  const runWheelAnimation = (scene: BABYLON.Scene) => {
+    // // Mesh 데이터 내에서 특정 Mesh 조회
+    // const wheelRB = car.meshes.find((mesh) => mesh.name === 'wheelRB');
+    // const wheelRF = car.meshes.find((mesh) => mesh.name === 'wheelRF');
+    // const wheelLB = car.meshes.find((mesh) => mesh.name === 'wheelLB');
+    // const wheelLF = car.meshes.find((mesh) => mesh.name === 'wheelLF');
+    // wheelRB?.beginAnimation('', true, 30, () => {
+    //   console.log('end');
+    // });
+
+    // 씬 내에서 특정 Mesh 조회
+    const wheelRB = scene.getMeshByName('wheelRB');
+    const wheelRF = scene.getMeshByName('wheelRF');
+    const wheelLB = scene.getMeshByName('wheelLB');
+    const wheelLF = scene.getMeshByName('wheelLF');
+
+    // 특정 Mesh 애니메이션 실행
+    scene.beginAnimation(wheelRB, 0, 30, true);
+    scene.beginAnimation(wheelRF, 0, 30, true);
+    scene.beginAnimation(wheelLB, 0, 30, true);
+    scene.beginAnimation(wheelLF, 0, 30, true);
+  };
+
+  const runCarAnimation = (scene: BABYLON.Scene) => {
+    const animCar = new BABYLON.Animation(
+      'carAnimation',
+      'position.x',
+      30,
+      BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+      BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE,
+    );
+
+    const carKeys: { frame: number; value: number }[] = [];
+    carKeys.push({ frame: 0, value: -4 });
+    carKeys.push({ frame: 150, value: 4 }); // 5초(30fps* 5s) = 150frame
+    carKeys.push({ frame: 210, value: 4 }); // 7초
+
+    animCar.setKeys(carKeys);
+
+    const car: BABYLON.AbstractMesh = scene.getMeshByName(
+      'car',
+    ) as BABYLON.AbstractMesh;
+    car.animations = [];
+    car.animations.push(animCar);
+
+    scene.beginAnimation(car, 0, 210, true);
+  };
+
   const onSceneReady = async (scene: BABYLON.Scene) => {
     const canvas = scene.getEngine().getRenderingCanvas();
 
@@ -239,26 +287,8 @@ const VillageAnimationPage = () => {
       'car.babylon',
     );
 
-    // Mesh 데이터 내에서 특정 Mesh 조회
-    const wheelRB = car.meshes.find((mesh) => mesh.name === 'wheelRB');
-    const wheelRF = car.meshes.find((mesh) => mesh.name === 'wheelRF');
-    const wheelLB = car.meshes.find((mesh) => mesh.name === 'wheelLB');
-    const wheelLF = car.meshes.find((mesh) => mesh.name === 'wheelLF');
-    wheelRB?.beginAnimation('', true, 30, () => {
-      console.log('end');
-    });
-
-    // 씬 내에서 특정 Mesh 조회
-    // const wheelRB = scene.getMeshByName('wheelRB');
-    // const wheelRF = scene.getMeshByName('wheelRF');
-    // const wheelLB = scene.getMeshByName('wheelLB');
-    // const wheelLF = scene.getMeshByName('wheelLF');
-
-    // 특정 Mesh 애니메이션 실행
-    scene.beginAnimation(wheelRB, 0, 30, true);
-    scene.beginAnimation(wheelRF, 0, 30, true);
-    scene.beginAnimation(wheelLB, 0, 30, true);
-    scene.beginAnimation(wheelLF, 0, 30, true);
+    runWheelAnimation(scene);
+    runCarAnimation(scene);
   };
 
   return (
