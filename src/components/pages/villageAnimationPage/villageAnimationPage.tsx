@@ -13,10 +13,9 @@ import {
   Space,
   Quaternion,
 } from '@babylonjs/core';
-import { buildDwellings } from '@/utils/builds';
+import { buildDwellings, buildCar } from '@/utils/builds';
 import { createScene } from '@/utils/createScene';
 import { localAxes } from '@/utils/localAxes';
-import { buildCar } from '@/utils/builds';
 
 /** turn : 회전각, dist : 거리 */
 class walk {

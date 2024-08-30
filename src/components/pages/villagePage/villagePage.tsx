@@ -112,7 +112,7 @@ const buildHouse = (width: 1 | 2 = 1): Mesh => {
 };
 
 /** 주거지 생성 */
-export const buildDwellings = () => {
+const buildDwellings = () => {
   const ground = buildGround();
   const detached_house = buildHouse(1); // 짧은 하우스
   detached_house.rotation.y = -Math.PI / 16;
