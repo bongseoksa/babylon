@@ -70,6 +70,7 @@ const AvoidingCollisionsPage = () => {
     /* ----- HitBox ----- */
     const wireMat = new StandardMaterial('wireMat');
     wireMat.wireframe = true;
+    wireMat.alpha = 0;
 
     const hitBox = MeshBuilder.CreateBox('carbox', {
       width: 0.5,
