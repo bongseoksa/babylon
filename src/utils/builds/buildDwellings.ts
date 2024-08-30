@@ -3,7 +3,7 @@ import { buildHouse } from './buildHouse';
 
 /** 샘플 주거지 마을 */
 export const buildDwellings = () => {
-  const ground = buildGround();
+  // const ground = buildGround();
   const detached_house = buildHouse(1); // 짧은 하우스
   detached_house.rotation.y = -Math.PI / 16;
   detached_house.position.x = -6.8;
