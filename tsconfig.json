@@ -15,7 +15,8 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"]
-    }
+    },
+    "types": ["@babylonjs/core", "@babylonjs/loaders"]
   },
   "include": [
     "next-env.d.ts",

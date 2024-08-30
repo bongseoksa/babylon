@@ -3,11 +3,13 @@ import SceneComponent from 'babylonjs-hook';
 import {
   MeshBuilder,
   Scene,
+  SceneLoader,
   StandardMaterial,
   Texture,
   Vector3,
 } from '@babylonjs/core';
 import { createScene } from '@/utils/createScene';
+import '@babylonjs/loaders';
 
 const BetterEnvironmentPage = () => {
   const onSceneReady = (scene: Scene) => {
@@ -39,6 +41,15 @@ const BetterEnvironmentPage = () => {
     );
     largeGround.material = largeGroundMat;
     largeGround.position.y = -0.01; // 맵이 겹쳐서 발생하는 blink 현상 방지
+
+    SceneLoader.ImportMeshAsync(
+      '',
+      'https://assets.babylonjs.com/meshes/',
+      'valleyvillage.glb',
+      scene,
+      null,
+      '.glb',
+    );
   };
 
   return (

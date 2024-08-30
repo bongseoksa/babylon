@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@babylonjs/core": "^7.17.2",
-    "@babylonjs/loaders": "^7.21.4",
+    "@babylonjs/core": "^7.23.0",
+    "@babylonjs/loaders": "^7.23.0",
     "@types/axios": "^0.14.0",
     "@types/earcut": "^2.1.4",
     "axios": "^1.7.2",
