@@ -4,13 +4,14 @@ import { Axis, MeshBuilder, Scene, Space, Vector3 } from '@babylonjs/core';
 import { createScene } from '@/utils/createScene';
 import { localAxes } from '@/utils/localAxes';
 
+/** turn : 회전각, dist : 거리 */
 class slide {
   public turn: number;
   public dist: number;
   //after covering dist apply turn
   constructor(turn: number, dist: number) {
     this.turn = turn;
-    this.dist = turn;
+    this.dist = dist;
   }
 }
 
@@ -38,12 +39,13 @@ const AnimatingToPath = () => {
     track.push(new slide(Math.PI / 2, 4));
     track.push(new slide((3 * Math.PI) / 4, 8));
     track.push(new slide((3 * Math.PI) / 4, 8 + 4 * Math.sqrt(2)));
+    console.log(track);
 
     let distance = 0;
     let step = 0.05;
     let p = 0;
     scene.onBeforeRenderObservable.add(() => {
-      sphere.movePOV(0, 0, step);
+      sphere.movePOV(0, 0, step); // mesh 로컬좌표계 기준 이동
       distance += step;
 
       if (distance > track[p].dist) {
