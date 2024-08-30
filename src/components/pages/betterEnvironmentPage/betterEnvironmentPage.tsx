@@ -12,9 +12,15 @@ import { createScene } from '@/utils/createScene';
 const BetterEnvironmentPage = () => {
   const onSceneReady = (scene: Scene) => {
     const { canvas, camera, light } = createScene(scene);
-    camera.radius = 200;
-    light.direction = new Vector3(4, 1, 0);
 
+    // 실제 작업할 맵
+    const groundMat = new StandardMaterial('groundMat');
+    groundMat.diffuseTexture = new Texture(
+      'https://assets.babylonjs.com/environments/villagegreen.png',
+    );
+    groundMat.diffuseTexture.hasAlpha = true;
+
+    // 디자인을 위한 보여주기용 큰 맵
     const largeGroundMat = new StandardMaterial('largeGroundMat');
     largeGroundMat.diffuseTexture = new Texture(
       'https://assets.babylonjs.com/environments/valleygrass.png',
@@ -32,6 +38,7 @@ const BetterEnvironmentPage = () => {
       },
     );
     largeGround.material = largeGroundMat;
+    largeGround.position.y = -0.01; // 맵이 겹쳐서 발생하는 blink 현상 방지
   };
 
   return (
