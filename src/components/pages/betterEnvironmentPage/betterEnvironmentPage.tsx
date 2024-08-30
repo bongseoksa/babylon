@@ -1,6 +1,12 @@
 import React from 'react';
 import SceneComponent from 'babylonjs-hook';
-import { MeshBuilder, Scene, Vector3 } from '@babylonjs/core';
+import {
+  MeshBuilder,
+  Scene,
+  StandardMaterial,
+  Texture,
+  Vector3,
+} from '@babylonjs/core';
 import { createScene } from '@/utils/createScene';
 
 const BetterEnvironmentPage = () => {
@@ -8,6 +14,11 @@ const BetterEnvironmentPage = () => {
     const { canvas, camera, light } = createScene(scene);
     camera.radius = 200;
     light.direction = new Vector3(4, 1, 0);
+
+    const largeGroundMat = new StandardMaterial('largeGroundMat');
+    largeGroundMat.diffuseTexture = new Texture(
+      'https://assets.babylonjs.com/environments/valleygrass.png',
+    );
 
     const largeGround = MeshBuilder.CreateGroundFromHeightMap(
       'largeGround',
@@ -20,6 +31,7 @@ const BetterEnvironmentPage = () => {
         maxHeight: 10,
       },
     );
+    largeGround.material = largeGroundMat;
   };
 
   return (
