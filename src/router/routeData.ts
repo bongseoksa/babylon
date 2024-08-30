@@ -7,6 +7,7 @@ const ROUTE_PATH: routeDataType = {
   VILLAGE: `/village`,
   VILLAGE_ANIMATION: `/villageAnimation`,
   AVOIDING_COLLISIONS: `/avoidingCollisions`,
+  BETTER_ENVIRONMENT: `/betterEnvironment`,
 };
 
 export { ROUTE_PATH };

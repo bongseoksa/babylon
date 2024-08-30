@@ -1,11 +1,25 @@
 import React from 'react';
 import SceneComponent from 'babylonjs-hook';
-import { Scene } from '@babylonjs/core';
+import { MeshBuilder, Scene, Vector3 } from '@babylonjs/core';
 import { createScene } from '@/utils/createScene';
 
 const BetterEnvironmentPage = () => {
   const onSceneReady = (scene: Scene) => {
     const { canvas, camera, light } = createScene(scene);
+    camera.radius = 200;
+    light.direction = new Vector3(4, 1, 0);
+
+    const largeGround = MeshBuilder.CreateGroundFromHeightMap(
+      'largeGround',
+      'https://assets.babylonjs.com/environments/villageheightmap.png',
+      {
+        width: 150,
+        height: 150,
+        subdivisions: 20, // 지형 그리드 세분화 정도
+        minHeight: 0,
+        maxHeight: 10,
+      },
+    );
   };
 
   return (
