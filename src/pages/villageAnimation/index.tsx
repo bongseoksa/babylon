@@ -5,7 +5,7 @@ import {
 import React from 'react';
 
 const VillageAnimation = () => {
-  return <AnimationToPath />;
+  return <VillageAnimationPage />;
 };
 
 export default VillageAnimation;
