@@ -49,11 +49,17 @@ const LightTheNightPage = () => {
     setParticleSystem(fountainParticleSystem(scene, fountain.position));
 
     // Lamp
-    const lamp = buildStreetLight(scene);
+    // const lamp = buildStreetLight(scene);
+    // lamp.scaling = new Vector3(0.1, 0.1, 0.1);
+    const lampLoaderResult = await SceneLoader.ImportMeshAsync(
+      '',
+      'https://assets.babylonjs.com/meshes/',
+      'lamp.babylon',
+    );
+    const lamp = scene.getMeshByName('lamp') as Mesh;
     lamp.position = new Vector3(2, 0, 2);
     lamp.rotation = Vector3.Zero();
     lamp.rotation.y = -Math.PI / 4;
-    lamp.scaling = new Vector3(0.1, 0.1, 0.1);
 
     const lamp1 = lamp.clone('lamp1');
     lamp1.position.x = -8;
