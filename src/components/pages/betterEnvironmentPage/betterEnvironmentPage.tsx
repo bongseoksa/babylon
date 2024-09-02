@@ -16,6 +16,7 @@ import '@babylonjs/loaders';
 import { buildDwellings, buildCar } from '@/utils/builds';
 import { buildSkybox } from '@/utils/builds/buildSkybox';
 import { Trees } from './_fragments/trees';
+import { UFOs } from './_fragments/ufo';
 
 const BetterEnvironmentPage = () => {
   const runWheelAnimation = (scene: Scene, car: Mesh) => {
@@ -52,7 +53,8 @@ const BetterEnvironmentPage = () => {
     const { canvas, camera, light } = createScene(scene);
     camera.upperBetaLimit = Math.PI / 2.2;
 
-    const { manager, sprites } = Trees(scene);
+    const trees = Trees(scene);
+    const ufos = UFOs(scene);
 
     // // 실제 작업할 맵
     // const groundMat = new StandardMaterial('groundMat');
