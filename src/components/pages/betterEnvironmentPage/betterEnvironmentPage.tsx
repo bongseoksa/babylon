@@ -14,6 +14,7 @@ import {
 import { createScene } from '@/utils/createScene';
 import '@babylonjs/loaders';
 import { buildDwellings, buildCar } from '@/utils/builds';
+import { buildSkybox } from '@/utils/builds/buildSkybox';
 
 const BetterEnvironmentPage = () => {
   const runWheelAnimation = (scene: Scene, car: Mesh) => {
@@ -46,7 +47,9 @@ const BetterEnvironmentPage = () => {
   };
 
   const onSceneReady = async (scene: Scene) => {
+    const skybox = buildSkybox(scene);
     const { canvas, camera, light } = createScene(scene);
+    camera.upperBetaLimit = Math.PI / 2.2;
 
     // // 실제 작업할 맵
     // const groundMat = new StandardMaterial('groundMat');
