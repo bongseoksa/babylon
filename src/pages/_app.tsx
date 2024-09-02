@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     let path = router.pathname;
 
     // 브랜치별로 디폴트 주소 변경
-    if (path === '/') path = ROUTE_PATH['BETTER_ENVIRONMENT'];
+    if (path === '/') path = ROUTE_PATH['PARTICLE_FOUNTAIN'];
     router.push(path);
   }, []);
 

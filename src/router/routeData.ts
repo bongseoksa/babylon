@@ -8,6 +8,7 @@ const ROUTE_PATH: routeDataType = {
   VILLAGE_ANIMATION: `/villageAnimation`,
   AVOIDING_COLLISIONS: `/avoidingCollisions`,
   BETTER_ENVIRONMENT: `/betterEnvironment`,
+  PARTICLE_FOUNTAIN: `/particleFountain`,
 };
 
 export { ROUTE_PATH };
