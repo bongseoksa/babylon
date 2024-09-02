@@ -14,6 +14,7 @@ import { buildSkybox } from '@/utils/builds/buildSkybox';
 import { Trees } from '../_fragments/trees';
 import { buildFountain } from '@/utils/builds/buildFountain';
 import { fountainParticleSystem } from '@/utils/particles/fountainParticle';
+import { buildStreetLight } from '@/utils/builds/buildStreetLight';
 
 const LightTheNightPage = () => {
   const [switched, setSwitched] = useState(false);
@@ -24,7 +25,7 @@ const LightTheNightPage = () => {
     const { canvas, camera, light } = createScene(scene);
     // camera.upperBetaLimit = Math.PI / 2.2;
     camera.alpha = -Math.PI / 1.5;
-    camera.beta = Math.PI / 2.2;
+    // camera.beta = Math.PI / 2.2;
 
     // trees
     const trees = Trees(scene);
@@ -46,6 +47,9 @@ const LightTheNightPage = () => {
 
     // Particles
     setParticleSystem(fountainParticleSystem(scene, fountain.position));
+
+    // Lamp
+    const lamp = buildStreetLight(scene);
 
     const pointerDown = (mesh: Mesh) => {
       if (mesh.id === 'fountain') {
