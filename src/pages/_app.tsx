@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     let path = router.pathname;
 
     // 브랜치별로 디폴트 주소 변경
-    if (path === '/') path = ROUTE_PATH['PARTICLE_FOUNTAIN'];
+    if (path === '/') path = ROUTE_PATH['LIGHT_THE_NIGHT'];
     router.push(path);
   }, []);
 

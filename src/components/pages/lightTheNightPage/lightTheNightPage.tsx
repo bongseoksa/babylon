@@ -15,7 +15,7 @@ import { Trees } from '../_fragments/trees';
 import { buildFountain } from '@/utils/builds/buildFountain';
 import { fountainParticleSystem } from '@/utils/particles/fountainParticle';
 
-const ParticleFountainPage = () => {
+const LightTheNightPage = () => {
   const [switched, setSwitched] = useState(false);
   const [particleSystem, setParticleSystem] = useState<ParticleSystem>();
 
@@ -87,4 +87,4 @@ const ParticleFountainPage = () => {
   );
 };
 
-export default ParticleFountainPage;
+export default LightTheNightPage;

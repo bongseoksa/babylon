@@ -15,8 +15,8 @@ import { createScene } from '@/utils/createScene';
 import '@babylonjs/loaders';
 import { buildDwellings, buildCar } from '@/utils/builds';
 import { buildSkybox } from '@/utils/builds/buildSkybox';
-import { Trees } from './_fragments/trees';
-import { UFOs } from './_fragments/ufo';
+import { Trees } from '../_fragments/trees';
+import { UFOs } from '../_fragments/ufo';
 
 const BetterEnvironmentPage = () => {
   const runWheelAnimation = (scene: Scene, car: Mesh) => {

@@ -9,6 +9,7 @@ const ROUTE_PATH: routeDataType = {
   AVOIDING_COLLISIONS: `/avoidingCollisions`,
   BETTER_ENVIRONMENT: `/betterEnvironment`,
   PARTICLE_FOUNTAIN: `/particleFountain`,
+  LIGHT_THE_NIGHT: `/lightTheNight`,
 };
 
 export { ROUTE_PATH };
