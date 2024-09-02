@@ -7,6 +7,7 @@ import {
   PointerInfo,
   Mesh,
   ParticleSystem,
+  Vector3,
 } from '@babylonjs/core';
 import { createScene } from '@/utils/createScene';
 import '@babylonjs/loaders';
@@ -23,9 +24,8 @@ const LightTheNightPage = () => {
   const onSceneReady = async (scene: Scene) => {
     const skybox = buildSkybox(scene);
     const { canvas, camera, light } = createScene(scene);
-    // camera.upperBetaLimit = Math.PI / 2.2;
     camera.alpha = -Math.PI / 1.5;
-    // camera.beta = Math.PI / 2.2;
+    light.intensity = 0.1;
 
     // trees
     const trees = Trees(scene);
@@ -50,6 +50,23 @@ const LightTheNightPage = () => {
 
     // Lamp
     const lamp = buildStreetLight(scene);
+    lamp.position = new Vector3(2, 0, 2);
+    lamp.rotation = Vector3.Zero();
+    lamp.rotation.y = -Math.PI / 4;
+    lamp.scaling = new Vector3(0.1, 0.1, 0.1);
+
+    const lamp1 = lamp.clone('lamp1');
+    lamp1.position.x = -8;
+    lamp1.position.z = 1.2;
+    lamp1.rotation.y = Math.PI / 2;
+
+    const lamp2 = lamp1.clone('lamp2');
+    lamp2.position.x = -2.7;
+    lamp2.position.z = 0.8;
+    lamp2.rotation.y = -Math.PI / 2;
+
+    const lamp3 = lamp.clone('lamp3');
+    lamp3.position.z = -8;
 
     const pointerDown = (mesh: Mesh) => {
       if (mesh.id === 'fountain') {
