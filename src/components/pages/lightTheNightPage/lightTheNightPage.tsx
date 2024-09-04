@@ -15,7 +15,14 @@ import { buildSkybox } from '@/utils/builds/buildSkybox';
 import { Trees } from '../_fragments/trees';
 import { buildFountain } from '@/utils/builds/buildFountain';
 import { fountainParticleSystem } from '@/utils/particles/fountainParticle';
-import { buildStreetLight } from '@/utils/builds/buildStreetLight';
+import { buildStreetLight } from '@/utils/builds';
+import {
+  AdvancedDynamicTexture,
+  Control,
+  Slider,
+  StackPanel,
+  TextBlock,
+} from '@babylonjs/gui';
 
 const LightTheNightPage = () => {
   const [switched, setSwitched] = useState(false);
@@ -25,7 +32,6 @@ const LightTheNightPage = () => {
     const skybox = buildSkybox(scene);
     const { canvas, camera, light } = createScene(scene);
     camera.alpha = -Math.PI / 1.5;
-    light.intensity = 0.1;
 
     // trees
     const trees = Trees(scene);
@@ -88,6 +94,37 @@ const LightTheNightPage = () => {
             pointerDown(pointerInfo.pickInfo.pickedMesh as Mesh);
           }
           break;
+      }
+    });
+
+    const adt = AdvancedDynamicTexture.CreateFullscreenUI('UI');
+    const panel = new StackPanel();
+    panel.width = '220px';
+    panel.top = '-50px';
+    panel.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    panel.verticalAlignment = Control.VERTICAL_ALIGNMENT_BOTTOM;
+    adt.addControl(panel);
+
+    const header = new TextBlock();
+    header.text = 'Night to Day';
+    header.height = '30px';
+    header.color = 'white';
+    panel.addControl(header);
+
+    const slider = new Slider();
+    slider.minimum = 0;
+    slider.maximum = 1;
+    slider.borderColor = 'black';
+    slider.color = '#AAAAAA';
+    slider.background = '#white';
+    slider.value = 1;
+    slider.height = '20px';
+    slider.width = '200px';
+    panel.addControl(slider);
+
+    slider.onValueChangedObservable.add((value) => {
+      if (light) {
+        light.intensity = value;
       }
     });
   };

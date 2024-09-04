@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@babylonjs/core": "^7.23.0",
+    "@babylonjs/gui": "^7.23.0",
     "@babylonjs/loaders": "^7.23.0",
     "@types/axios": "^0.14.0",
     "@types/earcut": "^2.1.4",
